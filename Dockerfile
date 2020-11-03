@@ -78,7 +78,12 @@ RUN apk add --no-cache mariadb-dev python3-dev gcc libressl-dev musl-dev libffi-
     tiff-dev \
     tk-dev \
     zlib-dev
-RUN pip install --upgrade pip && pip install "mysqlclient==2.0.1" "lxml==4.6.1" "cryptography==3.2.1" "grpcio==1.33.2"
+RUN pip install --upgrade pip && pip install \
+    "mysqlclient==2.0.1" \
+    "lxml==4.6.1" \
+    "cryptography==3.2.1" \
+    "grpcio==1.33.2" \
+    "pandas==1.1.4"
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Supervisor, which in turn will start Nginx and uWSGI
