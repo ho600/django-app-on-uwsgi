@@ -62,6 +62,13 @@ else
     content_server=$content_server'    location / {\n'
     content_server=$content_server'        include uwsgi_params;\n'
     content_server=$content_server'        uwsgi_pass unix:///tmp/uwsgi.sock;\n'
+    content_server=$content_server'        uwsgi_read_timeout 1200;\n'
+    content_server=$content_server'        uwsgi_send_timeout 1200;\n'
+    content_server=$content_server'        proxy_set_header    Host $host;\n'
+    content_server=$content_server'        proxy_set_header    X-Real-IP $remote_addr;\n'
+    content_server=$content_server'        proxy_set_header    X-Forwarded-For $remote_addr;\n'
+    content_server=$content_server'        proxy_set_header    REMOTE_ADDR $remote_addr;\n'
+    content_server=$content_server'        proxy_set_header    HTTP_HOST $host;\n'
     content_server=$content_server'    }\n'
     content_server=$content_server'}\n'
     # Save generated server /etc/nginx/conf.d/nginx.conf
