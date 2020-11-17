@@ -83,7 +83,8 @@ RUN pip install --upgrade pip && pip install \
     "lxml==4.6.1" \
     "cryptography==3.2.1" \
     "grpcio==1.33.2" \
-    "pandas==1.1.4"
+    "pandas==1.1.4" \
+    "Pillow>=7.2,<7.3"
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Supervisor, which in turn will start Nginx and uWSGI
