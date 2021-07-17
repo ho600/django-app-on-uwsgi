@@ -67,7 +67,7 @@ COPY ./app /app
 WORKDIR /app
 
 # pip install packages for django-app
-RUN apk add --no-cache mariadb-dev python3-dev gcc libressl-dev musl-dev libffi-dev libxml2-dev libxslt-dev git openssh-client build-base \
+RUN apk add --no-cache mariadb-client mariadb-dev python3-dev gcc libressl-dev musl-dev libffi-dev libxml2-dev libxslt-dev git openssh-client build-base \
     freetype-dev \
     fribidi-dev \
     harfbuzz-dev \
@@ -78,6 +78,9 @@ RUN apk add --no-cache mariadb-dev python3-dev gcc libressl-dev musl-dev libffi-
     tiff-dev \
     tk-dev \
     zlib-dev
+
+COPY mariadb-client.cnf /etc/my.cnf.d/
+
 RUN pip install --upgrade pip && pip install \
     "mysqlclient==2.0.1" \
     "lxml==4.6.1" \
