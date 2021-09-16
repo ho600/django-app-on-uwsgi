@@ -1,1 +1,1 @@
-pip install "Django>=2.2,<3"
+pip install "Django>=3.2,<3.3"

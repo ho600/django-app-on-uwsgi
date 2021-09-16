@@ -17,6 +17,9 @@ COPY uwsgi.ini /etc/uwsgi/
 RUN apk add --no-cache supervisor
 # Custom Supervisord config
 COPY supervisord-alpine.ini /etc/supervisor.d/supervisord.ini
+COPY supervisord-nginx.ini /etc/supervisor.d/nginx.ini
+COPY supervisord-uwsgi.ini /etc/supervisor.d/uwsgi.ini
+COPY supervisord-asgi.ini /etc/supervisor.d/asgi.ini
 
 # Our django-based projects depend this UWSGI_PRODUCTION_MODE to decide how to serve static files.
 ENV UWSGI_PRODUCTION_MODE 1
@@ -77,14 +80,16 @@ RUN apk add --no-cache mariadb-client mariadb-dev python3-dev gcc libressl-dev m
     tcl-dev \
     tiff-dev \
     tk-dev \
-    zlib-dev
+    zlib-dev \
+    openssl-dev \
+    cargo
 
 COPY mariadb-client.cnf /etc/my.cnf.d/
 
 RUN pip install --upgrade pip && pip install \
     "mysqlclient==2.0.1" \
     "lxml==4.6.1" \
-    "cryptography==3.2.1" \
+    "cryptography==3.4.8" \
     "grpcio==1.33.2" \
     "pandas==1.1.4" \
     "Pillow>=7.2,<7.3"
