@@ -29,7 +29,7 @@ else
     content=$content'http {\n'
     content=$content'    include       /etc/nginx/mime.types;\n'
     content=$content'    default_type  application/octet-stream;\n'
-    content=$content'    log_format  main  '"'\$remote_addr - \$remote_user [\$time_local] \"\$request\" '\n"
+    content=$content'    log_format  main  '"'\$http_x_request_id \$remote_addr - \$remote_user [\$time_local] \"\$request\" '\n"
     content=$content'                      '"'\$status \$body_bytes_sent \"\$http_referer\" '\n"
     content=$content'                      '"'\"\$http_user_agent\" \"\$http_x_forwarded_for\"';\n"
     content=$content'    access_log  /var/log/nginx/access.log  main;\n'
