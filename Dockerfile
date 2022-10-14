@@ -89,8 +89,8 @@ COPY mariadb-client.cnf /etc/my.cnf.d/
 RUN pip install --upgrade pip && pip install \
     "mysqlclient==2.0.1" \
     "lxml==4.6.1" \
-    "cryptography==3.4.8" \
-    "grpcio==1.33.2" \
+    "cryptography==38.0.1" \
+    "grpcio==1.49.1" \
     "pandas==1.1.4" \
     "Pillow>=7.2,<7.3"
 
