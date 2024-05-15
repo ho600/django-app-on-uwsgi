@@ -67,7 +67,7 @@ COPY ./app /app
 WORKDIR /app
 
 # pip install packages for django-app
-RUN apk add --no-cache mariadb-client mariadb-dev python3-dev gcc libressl-dev musl-dev libffi-dev libxml2-dev libxslt-dev git openssh-client build-base \
+RUN apk add --no-cache mariadb-client mariadb-dev python3-dev gcc openssl-dev musl-dev libffi-dev libxml2-dev libxslt-dev git openssh-client build-base \
     freetype-dev \
     fribidi-dev \
     harfbuzz-dev \
@@ -87,7 +87,7 @@ RUN pip install --upgrade pip && pip install \
     "cryptography==3.2.1" \
     "grpcio==1.33.2" \
     "pandas==1.1.4" \
-    "Pillow>=7.2,<7.3"
+    "Pillow>=9.3,<9.4"
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Supervisor, which in turn will start Nginx and uWSGI
