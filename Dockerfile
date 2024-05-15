@@ -82,11 +82,11 @@ RUN apk add --no-cache mariadb-client mariadb-dev python3-dev gcc openssl-dev mu
 COPY mariadb-client.cnf /etc/my.cnf.d/
 
 RUN pip install --upgrade pip && pip install \
-    "mysqlclient==2.0.1" \
-    "lxml==4.6.1" \
-    "cryptography==3.2.1" \
-    "grpcio==1.33.2" \
-    "pandas==1.1.4" \
+    "mysqlclient==2.0.3" \
+    "lxml>=4.9<4.10" \
+    "cryptography>=41,<42" \
+    "grpcio>=1.56,<1.57" \
+    "pandas>=2.0,<2.1" \
     "Pillow>=9.3,<9.4"
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
