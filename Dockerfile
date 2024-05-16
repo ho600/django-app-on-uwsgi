@@ -83,11 +83,11 @@ COPY mariadb-client.cnf /etc/my.cnf.d/
 
 RUN pip install --upgrade pip && pip install \
     "mysqlclient==2.0.3" \
-    "lxml>=4.9<4.10" \
+    "lxml>=4.9,<4.10" \
     "cryptography>=41,<42" \
-    "grpcio>=1.56,<1.57" \
-    "pandas>=2.0,<2.1" \
-    "Pillow>=9.3,<9.4"
+    "grpcio>=1.63,<1.64" \
+    "pandas>=2.2,<2.3" \
+    "Pillow>=10.3,<10.4"
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Supervisor, which in turn will start Nginx and uWSGI
