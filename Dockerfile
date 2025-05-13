@@ -1,4 +1,4 @@
-FROM ho600/nginx-on-alpine:latest
+FROM ho600/nginx-on-alpine:python-3.12
 
 LABEL maintainer="Amon Ho <hoamon@ho600.com>"
 
