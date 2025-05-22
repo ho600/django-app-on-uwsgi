@@ -89,7 +89,7 @@ RUN pip install \
 RUN pip install \
     "cryptography>=41,<42"
 RUN pip install \
-    "grpcio>=1.63,<1.64"
+    "grpcio>=1.71,<1.72"
 RUN pip install \
     "pandas>=2.2,<2.3"
 RUN pip install \
