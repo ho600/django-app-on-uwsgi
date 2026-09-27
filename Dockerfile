@@ -1,4 +1,4 @@
-FROM ho600/nginx-on-alpine:python-3.12
+FROM ho600/nginx-on-alpine:python-3.14-nginx-1.30.5
 
 LABEL maintainer="Amon Ho <hoamon@ho600.com>"
 
@@ -17,40 +17,42 @@ COPY uwsgi.ini /etc/uwsgi/
 RUN apk add --no-cache supervisor
 # Custom Supervisord config
 COPY supervisord-alpine.ini /etc/supervisor.d/supervisord.ini
+COPY supervisord-nginx.ini /etc/supervisor.d/nginx.ini
+COPY supervisord-asgi.ini /etc/supervisor.d/asgi.ini
 
 # Our django-based projects depend this UWSGI_PRODUCTION_MODE to decide how to serve static files.
-ENV UWSGI_PRODUCTION_MODE 1
+ENV UWSGI_PRODUCTION_MODE=1
 
 # uWSGI Python plugin
 # As an env var to re-use the config file
-ENV UWSGI_PLUGIN python3
+ENV UWSGI_PLUGIN=python3
 
 # Which uWSGI .ini file should be used, to make it customizable
-ENV UWSGI_INI /etc/uwsgi/uwsgi.ini
+ENV UWSGI_INI=/etc/uwsgi/uwsgi.ini
 
 # By default, run 2 processes
-ENV UWSGI_CHEAPER 2
+ENV UWSGI_CHEAPER=2
 
 # By default, when on demand, run up to 16 processes
-ENV UWSGI_PROCESSES 16
+ENV UWSGI_PROCESSES=16
 
 # By default, allow unlimited file sizes, modify it to limit the file sizes
 # To have a maximum of 1 MB (Nginx's default) change the line to:
-# ENV NGINX_MAX_UPLOAD 1m
-ENV NGINX_MAX_UPLOAD 0
+# ENV NGINX_MAX_UPLOAD=1m
+ENV NGINX_MAX_UPLOAD=0
 
 # By default, Nginx will run a single worker process, setting it to auto
 # will create a worker for each CPU core
-ENV NGINX_WORKER_PROCESSES 1
+ENV NGINX_WORKER_PROCESSES=1
 
 # By default, Nginx listens on port 80.
 # To modify this, change LISTEN_PORT environment variable.
 # (in a Dockerfile or with an option for `docker run`)
-ENV LISTEN_PORT 80
+ENV LISTEN_PORT=80
 
 # Used by the entrypoint to explicitly add installed Python packages 
 # and uWSGI Python packages to PYTHONPATH otherwise uWSGI can't import Flask
-ENV ALPINEPYTHON python3.8
+ENV ALPINEPYTHON=python3.14
 
 # Copy start.sh script that will check for a /app/prestart.sh script and run it before starting the app
 COPY start.sh /start.sh
@@ -83,17 +85,20 @@ COPY mariadb-client.cnf /etc/my.cnf.d/
 
 RUN pip install --upgrade pip
 RUN pip install \
-    "mysqlclient==2.0.3"
+    "mysqlclient>=2.1,<2.2"
 RUN pip install \
-    "lxml>=4.9,<4.10"
+    "lxml>=6.1,<6.2"
 RUN pip install \
-    "cryptography>=41,<42"
+    "cryptography>=50.0,<50.1"
 RUN pip install \
-    "grpcio>=1.71,<1.72"
+    "grpcio>=1.84,<1.85"
 RUN pip install \
-    "pandas>=2.2,<2.3"
+    "pandas>=3.0,<3.1"
 RUN pip install \
-    "Pillow>=10.3,<10.4"
+    "Pillow>=12.3,<12.4"
+RUN pip install --upgrade pip \
+     "Django>=5.2,<5.3" \
+     "daphne>=4.0,<4.1"
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Supervisor, which in turn will start Nginx and uWSGI
