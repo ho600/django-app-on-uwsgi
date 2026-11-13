@@ -95,10 +95,10 @@ RUN pip install \
 RUN pip install \
     "pandas>=3.0,<3.1"
 RUN pip install \
-    "Pillow>=12.3,<12.4"
+    "Pillow>=13.0,<13.1"
 RUN pip install --upgrade pip \
      "Django>=5.2,<5.3" \
-     "daphne>=4.0,<4.1"
+     "daphne>=4.2,<4.3"
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Supervisor, which in turn will start Nginx and uWSGI
